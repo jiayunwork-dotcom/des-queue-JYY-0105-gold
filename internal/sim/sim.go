@@ -61,6 +61,9 @@ func Validate(c Config) error {
 	if c.Customers < 1 {
 		return fmt.Errorf("customers must be >= 1, got %d", c.Customers)
 	}
+	if c.Servers == 1 && c.Lambda >= c.Mu {
+		return errors.New("unstable: M/M/1 requires lambda < mu")
+	}
 	return nil
 }
 
